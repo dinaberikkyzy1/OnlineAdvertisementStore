@@ -1,0 +1,173 @@
+{% load static %}
+{% block index %}
+
+<section>
+
+    <h1 style="text-align:center;">Main categories</h1>
+    <div class="row scroll" >
+        {% for cats in cat_list %}
+        <div class="col-md-3">
+            <img src="{% static cats.image %}" alt="" style="width:100px; background-color: rgb(200, 248, 246); border-radius: 50%;">
+            {% if selected == cats.slug %}
+            <a class="li_choose selected" style="color:blue;" href="{{ cats.get_absolute_url }}">{{ cats.name }}</a>
+            {% else %}
+            <a class="li_choose" style="color:black;" href="{{ cats.get_absolute_url }}">{{ cats.name }}</a>
+            {% endif %}
+
+        </div>
+        {% endfor %}
+
+    </div>
+    <div id="group">
+        <ul class="ks-cboxtags">
+            <li><input type="checkbox" id="checkboxOne" value="Atyrau"><label for="checkboxOne">Atyrau</label></li>
+            <li><input type="checkbox" id="checkboxTwo" value="Nur-Sultan" ><label for="checkboxTwo">Nur-Sultan</label></li>
+            <li><input type="checkbox" id="checkboxThree" value="Алматы" ><label for="checkboxThree">Almaty</label></li>
+            <li><input type="checkbox" id="checkboxFour" value="Shymkent"><label for="checkboxFour">Shymkent</label></li>
+            <li><input type="checkbox" id="checkboxFive" value="Karaganda"><label for="checkboxFive">Karaganda</label></li>
+            <li><input type="checkbox" id="checkboxSix" value="Aqtobe"><label for="checkboxSix">Aqtobe</label></li>
+            <li><input type="checkbox" id="checkboxSeven" value="Aktau"><label for="checkboxSeven">Aktau</label></li>
+            <li><input type="checkbox" id="checkboxEight" value="Balqash"><label for="checkboxEight">Balqash</label></li>
+            <li><input type="checkbox" id="checkboxNine" value="Zhezkazgan"><label for="checkboxNine">Zhezkazgan</label></li>
+            <li><input type="checkbox" id="checkboxTen" value="Kentau"><label for="checkboxTen">Kentau</label></li>
+            <li class="ks-selected"><input type="checkbox" id="checkboxEleven" value="Kyzylorda"><label for="checkboxEleven">Kyzylorda</label></li>
+            <li><input type="checkbox" id="checkboxTwelve" value="Kokshetau"><label for="checkboxTwelve">Kokshetau</label></li>
+            <li><input type="checkbox" id="checkboxThirteen" value="Kostanay"><label for="checkboxThirteen">Kostanay</label></li>
+            <li><input type="checkbox" id="checkboxFourteen" value="Zhanaozen"><label for="checkboxFourteen">Zhanaozen</label></li>
+            <li><input type="checkbox" id="checkboxFifteen" value="Pavlodar"><label for="checkboxFifteen">Pavlodar</label></li>
+            <li><input type="checkbox" id="checkboxSixteen" value="Petropavl"><label for="checkboxSixteen">Petropavl</label></li>
+            <li><input type="checkbox" id="checkboxSeventeen" value="Ridder"><label for="checkboxSeventeen">Ridder</label></li>
+            <li><input type="checkbox" id="checkboxNineteen" value="Semey"><label for="checkboxNineteen">Semey</label></li>
+            <li><input type="checkbox" id="checkboxTwentyOne" value="Taraz"><label for="checkboxTwentyOne">Taraz</label></li>
+            <li><input type="checkbox" id="checkboxTwentyTwo" value="Turkistan"><label for="checkboxTwentyTwo">Turkistan</label></li>
+            <li><input type="checkbox" id="checkboxTwentyThree" value="Oral"><label for="checkboxTwentyThree">Oral</label></li>
+            <li><input type="checkbox" id="checkboxTwentyFour" value="Oskemen"><label for="checkboxTwentyFour">Oskemen</label></li>
+
+        </ul>
+
+    </div>
+    <div class="row">
+    <div class="col-md-3">
+<!--        <select class="form-select" style="margin-top: 66px;margin-left: 99px; width:200px; text-align:center;" aria-label="Default select example">-->
+
+<!--            <option selected>Featured</option>-->
+<!--            <option value="1">Price:Low to High</option>-->
+<!--            <option value="2">Price:High to Low</option>-->
+<!--            <option value="3">Newest</option>-->
+<!--            <option value="3">Oldest</option>-->
+<!--        </select>-->
+        <div class="dropdown" style="margin-top: 56px; margin-left: 60px;">
+          <button class="btn btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            Sort by: Featured
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <li><a class="dropdown-item" href="{% url 'orderbymax'  %}">Price:Low to High</a></li>
+              <li><a class="dropdown-item" href="{% url 'orderbymin' %}">Price:High to Low</a></li>
+              <li><a class="dropdown-item" href="{% url 'orderbydate' %}">Newest</a></li>
+              <li><a class="dropdown-item" href="{% url 'orderbydate' %}">Oldest</a></li>
+
+          </ul>
+        </div>
+    </div>
+    <div class="col-md-6">
+
+
+    <form  id='range_filter' action="{% url 'range_price' %}" method="POST" style="margin-top:25px;">
+            {% csrf_token %}
+            <div class="row justify-content-center" >
+                <div class="form-outline">
+                    <label class="form-label justify-content-center" for="typeNumber" style="">Min.</label>
+                    <input type="number" name="typeNumber" id="typeNumber" class="form-control active" value="{% if range_num1 %}{{ range_num1 }}{% else %}0{% endif %}">
+
+
+                <div class="form-notch"><div class="form-notch-leading" style="width: 9px;"></div><div class="form-notch-middle" style="width: 61.6px;"></div><div class="form-notch-trailing"></div></div></div>
+
+
+                <div class="form-outline justify-content-center">
+                    <label class="form-label justify-content-center" for="typeNumber2" style="">Max.</label>
+                    <input type="number" name="typeNumber2" id="typeNumber2" class="form-control active" value="{% if range_num2 %}{{ range_num2 }}{% else %}200000000{% endif %}">
+
+                <div class="form-notch"><div class="form-notch-leading" style="width: 9px;"></div><div class="form-notch-middle" style="width: 64.8px;"></div><div class="form-notch-trailing"></div></div></div>
+                <p style="opacity:0"><input type="submit"></p>
+            </div>
+        </form>
+        </div>
+        </div>
+
+    <div class="obj" id="obj">
+        {% if searched %}
+            <h1 style="text-align:center;">Search: {{ searched }}</h1>
+        {% else %}
+
+        {% endif %}
+
+        {% if advt_list %}
+            <h1 style="text-align:center;">Advertisements</h1>
+        {% for a in page_obj %}
+
+            <div class="row m-4 card_c {{ a.pk }}" id="row m-4 card_c {{ a.pk }}" style="padding:10px; background-color:white">
+        <div class="col-md-3" style="max-width: 23%;">
+            <a href="{{ a.get_absolute_url }}"><img src="{{ a.advertisement_image.url }}"  class="card-img-top" style="width: 16rem; height: 12rem;"></a>
+        </div>
+        <div class="col-md-7" >
+            <a href="{{ a.get_absolute_url }}" style="color:black;font-family:'Plus Jakarta Sans',sans-serif;"><h4>{{ a.advertisement_name }}</h4></a>
+            <p class="card-text" style = "font-family: 'Mulish', sans-serif; serif;font-weight:bold;font-size:17px;">{{ a.advertisement_location }}, KAZAKHSTAN</p>
+            <p>{{ a.advertisement_date_created }}</p>
+        </div>
+        <div class="col-md-2" style="padding-right: 5px;">
+            <p class="card-text" style="float:right; font-size:20px;font-weight:bold; padding-left: 35px">{{ a.advertisement_price }} KZT</p>
+            <form  method="POST" style="float:right;" >
+             {% csrf_token %}
+                 <button class="bt" onclick=postdata(this) value="{{ a.pk }}" type="button" style="border:0; background:transparent;">
+                            {% if a in request.user.profile.fav_adver.all %}
+                                <img id="a{{ a.pk }}" src="{% static 'img/icons8-favorite-48.png' %}" alt="">
+                            {% else %}
+                                <img id="a{{ a.pk }}" src="{% static 'img/icons8-favorite-50.png' %}" alt="">
+                            {% endif %}
+                 </button>
+            </form>
+        </div>
+</div>
+        {% endfor %}
+
+
+
+
+        {% else %}
+        <div class="notfound" style="text-align:center; margin: 50px 0 50px 0;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160"><g fill="none" fill-rule="evenodd"><path fill="#CEDDFF" d="M126.667 69.334c0 31.664-25.67 57.333-57.334 57.333S12 100.997 12 69.334C12 37.669 37.669 12 69.333 12c31.665 0 57.334 25.67 57.334 57.334"/><path fill="#6C99FF" d="M56.605 121.796L54.601 17.594c42.429 6.09 63.683 24.758 63.76 56.003 0 21.11-20.585 37.175-61.756 48.199z"/><path fill="#002F34" d="M69.8 114c-24.371 0-44.2-19.827-44.2-44.2s19.829-44.2 44.2-44.2c24.371 0 44.2 19.827 44.2 44.2S94.171 114 69.8 114zm69.56 15.742l-.001.001-24.214-24.213C122.92 95.685 127.6 83.29 127.6 69.8c0-31.872-25.928-57.8-57.8-57.8C37.928 12 12 37.928 12 69.8c0 31.872 25.928 57.8 57.8 57.8 13.49 0 25.885-4.681 35.73-12.455l24.213 24.214 8.64 8.641H148v-9.616l-8.64-8.642z"/><path fill="#002F34" d="M68 82.035l12.702-12.702 4.632 4.631-12.702 12.702zM50.018 77.093a6.889 6.889 0 119.742-9.742 6.889 6.889 0 01-9.742 9.742m16-15.111a6.89 6.89 0 119.742-9.742 6.89 6.89 0 01-9.742 9.742"/></g></svg>
+            <h3>We didn't find what you're looking for...</h3>
+        </div>
+            {% endif %}
+
+    </div>
+    {% if page_obj.has_other_pages %}
+    <nav class="list-pages">
+        <ul>
+            {% if page_obj.has_previous %}
+            <li class="page-num">
+                <a href="?page={{ page_obj.previous_page_number }}"> &lt;</a>
+            </li>
+            {% endif  %}
+            {% for p in page_obj.paginator.page_range %}
+            {% if page_obj.number == p %}
+            <li class="page-num page-num-selected">
+                <p>{{ p }}</p>
+            </li>
+            {% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2  %}
+            <li class="page-num">
+               <p><a href="?page={{ p }}">{{ p }}</a></p>
+            </li>
+            {% endif %}
+            {% endfor %}
+            {% if page_obj.has_next %}
+            <li class="page-num">
+                <a href="?page={{ page_obj.next_page_number }}"> &gt;</a>
+            </li>
+            {% endif  %}
+        </ul>
+    </nav>
+    {% endif %}
+</section>
+
+{% endblock %}
