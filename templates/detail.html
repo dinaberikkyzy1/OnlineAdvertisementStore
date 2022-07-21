@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block index %}
+
+<div class="m-2">
+    <div class="d-flex p-2">
+    {% include 'carusel.html' %}
+    {% include 'info_seller.html' %}
+    </div>
+    {% include 'info_about_item.html' %}
+
+
+    {%  endblock %}
+</div>
